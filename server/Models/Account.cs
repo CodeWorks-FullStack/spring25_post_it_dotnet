@@ -1,5 +1,6 @@
 namespace post_it_dotnet.Models;
 
+// NOTE inheritance!
 public class Account : Profile
 {
   public string Email { get; set; }
