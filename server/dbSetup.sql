@@ -14,7 +14,7 @@ CREATE TABLE albums(
   title TINYTEXT NOT NULL,
   description TEXT,
   cover_img TEXT NOT NULL,
-  archived BOOLEAN NOT NULL,
+  archived BOOLEAN NOT NULL DEFAULT false,
   category ENUM('aesthetics', 'games', 'animals', 'food', 'vibes', 'misc'),
   creator_id VARCHAR(255) NOT NULL,
   FOREIGN KEY (creator_id) REFERENCES accounts(id) ON DELETE CASCADE
@@ -23,3 +23,10 @@ CREATE TABLE albums(
 DROP TABLE albums;
 
 SELECT * FROM albums;
+
+SELECT
+    albums.*,
+    accounts.*
+    FROM albums
+    INNER JOIN accounts ON accounts.id = albums.creator_id
+    WHERE albums.id = 1;
