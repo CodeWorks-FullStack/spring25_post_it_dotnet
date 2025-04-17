@@ -11,6 +11,7 @@ public class PicturesService
     _albumsService = albumsService;
   }
   private readonly PicturesRepository _repository;
+  // NOTE services can talk to each other 🤝
   private readonly AlbumsService _albumsService;
 
   internal Picture CreatePicture(Picture pictureData)
@@ -35,20 +36,24 @@ public class PicturesService
   private Picture GetPictureById(int pictureId)
   {
     Picture picture = _repository.GetPictureById(pictureId);
+
     if (picture == null)
     {
       throw new Exception("Invalid picture id: " + pictureId);
     }
+
     return picture;
   }
 
   internal void DeletePicture(int pictureId, Account userInfo)
   {
     Picture picture = GetPictureById(pictureId);
+
     if (picture.CreatorId != userInfo.Id)
     {
-      throw new Exception($"YOU CAN NOT DELETE ANOTHER USER'S PICTURE, {userInfo.Name.ToUpper()}");
+      throw new Exception($"YOU CAN NOT DELETE ANOTHER USER'S PICTURE, {userInfo.Name.ToUpper()}!");
     }
+
     _repository.DeletePicture(pictureId);
   }
 }

@@ -30,10 +30,12 @@ public class AlbumsService
     List<Album> albums = _repository.GetAlbumsByCategory(category);
     return albums;
   }
+  // NOTE overload example
   internal List<Album> GetAlbums(bool archived)
   {
     throw new NotImplementedException();
   }
+  // NOTE overload example
   internal List<Album> GetAlbums(string category, string title)
   {
     throw new NotImplementedException();

@@ -79,6 +79,7 @@ public class AlbumsRepository
 
     int rowsAffected = _db.Execute(sql, album);
 
+    // NOTE super elite code that your boss doesn't want you to know about
     switch (rowsAffected)
     {
       case 1:
