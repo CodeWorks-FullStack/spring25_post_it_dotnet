@@ -41,3 +41,6 @@ SELECT
     FROM albums
     INNER JOIN accounts ON accounts.id = albums.creator_id
     WHERE albums.id = 1;
+
+
+    SELECT * FROM pictures;

@@ -1,4 +1,5 @@
 
+
 namespace post_it_dotnet.Repositories;
 
 public class PicturesRepository
@@ -30,5 +31,24 @@ public class PicturesRepository
     }, pictureData).SingleOrDefault();
 
     return createdPicture;
+  }
+
+  internal List<Picture> GetPicturesByAlbumId(int albumId)
+  {
+    string sql = @"
+    SELECT
+    pictures.*,
+    accounts.*
+    FROM pictures
+    INNER JOIN accounts ON accounts.id = pictures.creator_id
+    WHERE pictures.album_id = @albumId;";
+
+    List<Picture> pictures = _db.Query(sql, (Picture picture, Profile account) =>
+    {
+      picture.Creator = account;
+      return picture;
+    },
+    new { albumId }).ToList();
+    return pictures;
   }
 }
