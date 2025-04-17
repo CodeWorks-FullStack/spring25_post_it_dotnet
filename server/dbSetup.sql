@@ -33,7 +33,7 @@ CREATE TABLE pictures(
 
 DROP TABLE albums;
 
-SELECT * FROM albums;
+SELECT * FROM albums WHERE archived = true;
 
 SELECT
     albums.*,

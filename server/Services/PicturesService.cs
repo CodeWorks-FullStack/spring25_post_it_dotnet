@@ -5,14 +5,23 @@ namespace post_it_dotnet.Services;
 
 public class PicturesService
 {
-  public PicturesService(PicturesRepository repository)
+  public PicturesService(PicturesRepository repository, AlbumsService albumsService)
   {
     _repository = repository;
+    _albumsService = albumsService;
   }
   private readonly PicturesRepository _repository;
+  private readonly AlbumsService _albumsService;
 
   internal Picture CreatePicture(Picture pictureData)
   {
+    Album album = _albumsService.GetAlbumById(pictureData.AlbumId);
+
+    if (album.Archived)
+    {
+      throw new Exception(album.Title + " is archived and no longer accepting pictures!");
+    }
+
     Picture picture = _repository.CreatePicture(pictureData);
     return picture;
   }
