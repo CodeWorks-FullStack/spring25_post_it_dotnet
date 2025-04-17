@@ -23,6 +23,22 @@ public class AlbumsService
     return albums;
   }
 
+  // NOTE overload
+  // you can reuse the same name for a method, but depending on how many arguments/types of arguments are passed determines which method gets called (method signature)
+  internal List<Album> GetAlbums(string category)
+  {
+    List<Album> albums = _repository.GetAlbumsByCategory(category);
+    return albums;
+  }
+  internal List<Album> GetAlbums(bool archived)
+  {
+    throw new NotImplementedException();
+  }
+  internal List<Album> GetAlbums(string category, string title)
+  {
+    throw new NotImplementedException();
+  }
+
   internal Album GetAlbumById(int albumId)
   {
     Album album = _repository.GetAlbumById(albumId);

@@ -34,11 +34,21 @@ public class AlbumsController : ControllerBase
   }
 
   [HttpGet]
-  public ActionResult<List<Album>> GetAllAlbums()
+  public ActionResult<List<Album>> GetAlbums([FromQuery] string category)
   {
     try
     {
-      List<Album> albums = _albumsService.GetAlbums();
+      List<Album> albums;
+
+      if (category == null)
+      {
+        albums = _albumsService.GetAlbums();
+      }
+      else
+      {
+        albums = _albumsService.GetAlbums(category);
+      }
+
       return Ok(albums);
     }
     catch (Exception exception)

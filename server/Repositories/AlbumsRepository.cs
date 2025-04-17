@@ -89,4 +89,22 @@ public class AlbumsRepository
         throw new Exception("UPDATE WAS TOO SUCCESSFUL");
     }
   }
+
+  internal List<Album> GetAlbumsByCategory(string category)
+  {
+    string sql = @"
+    SELECT
+    albums.*,
+    accounts.*
+    FROM albums
+    INNER JOIN accounts ON accounts.id = albums.creator_id
+    WHERE albums.category LIKE @category;";
+
+    List<Album> albums = _db.Query(sql, (Album album, Profile account) =>
+    {
+      album.Creator = account;
+      return album;
+    }, new { category = $"%{category}%" }).ToList();
+    return albums;
+  }
 }
