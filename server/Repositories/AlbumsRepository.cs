@@ -67,6 +67,7 @@ public class AlbumsRepository
     {
       album.Creator = account;
       return album;
+
     }, new { albumId }).SingleOrDefault();
 
     return foundAlbum;
