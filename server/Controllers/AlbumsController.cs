@@ -44,4 +44,35 @@ public class AlbumsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  [HttpGet("{albumId}")]
+  public ActionResult<Album> GetAlbumById(int albumId)
+  {
+    try
+    {
+      Album album = _albumsService.GetAlbumById(albumId);
+      return Ok(album);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
+  // NOTE soft delete! Might not be a good reference for your checkpoints!
+  [Authorize]
+  [HttpDelete("{albumId}")]
+  public async Task<ActionResult<Album>> ArchiveAlbum(int albumId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Album album = _albumsService.ArchiveAlbum(albumId, userInfo);
+      return Ok(album);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }

@@ -1,5 +1,7 @@
 
 
+
+
 namespace post_it_dotnet.Repositories;
 
 public class AlbumsRepository
@@ -49,5 +51,41 @@ public class AlbumsRepository
     }).ToList();
 
     return albums;
+  }
+
+  internal Album GetAlbumById(int albumId)
+  {
+    string sql = @"
+    SELECT
+    albums.*,
+    accounts.*
+    FROM albums
+    INNER JOIN accounts ON accounts.id = albums.creator_id
+    WHERE albums.id = @albumId;";
+
+    Album foundAlbum = _db.Query(sql, (Album album, Profile account) =>
+    {
+      album.Creator = account;
+      return album;
+    }, new { albumId }).SingleOrDefault();
+
+    return foundAlbum;
+  }
+
+  internal void ArchiveAlbum(Album album)
+  {
+    string sql = "UPDATE albums SET archived = @Archived WHERE id = @Id LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, album);
+
+    switch (rowsAffected)
+    {
+      case 1:
+        return;
+      case 0:
+        throw new Exception("UPDATE WAS NOT SUCCESSFUL");
+      default:
+        throw new Exception("UPDATE WAS TOO SUCCESSFUL");
+    }
   }
 }
