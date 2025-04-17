@@ -21,3 +21,5 @@ CREATE TABLE albums(
 );
 
 DROP TABLE albums;
+
+SELECT * FROM albums;
