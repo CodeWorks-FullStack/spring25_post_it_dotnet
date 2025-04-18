@@ -4,16 +4,18 @@ namespace post_it_dotnet.Controllers;
 [Route("api/[controller]")]
 public class AlbumsController : ControllerBase
 {
-  public AlbumsController(AlbumsService albumsService, Auth0Provider auth0Provider, PicturesService picturesService)
+  public AlbumsController(AlbumsService albumsService, Auth0Provider auth0Provider, PicturesService picturesService, WatchersService watchersService)
   {
     _albumsService = albumsService;
     _auth0Provider = auth0Provider;
     _picturesService = picturesService;
+    _watchersService = watchersService;
   }
 
-  private readonly AlbumsService _albumsService;
   private readonly Auth0Provider _auth0Provider;
+  private readonly AlbumsService _albumsService;
   private readonly PicturesService _picturesService;
+  private readonly WatchersService _watchersService;
 
 
   [Authorize]
@@ -101,4 +103,5 @@ public class AlbumsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
 }
