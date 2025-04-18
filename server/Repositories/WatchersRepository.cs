@@ -27,6 +27,8 @@ public class WatchersRepository
     INNER JOIN accounts ON accounts.id = watchers.account_id
     WHERE watchers.id = LAST_INSERT_ID();";
 
+    // NOTE we can still cast data from our accounts table into our WatcherProfile DTO, and dapper will fill in as many properties as possible. We are responsible for assigning the remaining necessary properties with our mapping function
+
     WatcherProfile watcherProfile = _db.Query(sql, (Watcher watcher, WatcherProfile profile) =>
     {
       profile.AlbumId = watcher.AlbumId;

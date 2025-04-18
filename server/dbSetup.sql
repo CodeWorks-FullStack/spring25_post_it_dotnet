@@ -80,5 +80,6 @@ albums.*,
 accounts.*
 FROM watchers
 INNER JOIN albums ON albums.id = watchers.album_id
-INNER JOIN accounts ON accounts.id = albums.creator_id
+-- NOTE Important that we join on the album's creator_id, and not watcher's account_id
+INNER JOIN accounts ON accounts.id = albums.creator_id 
 WHERE watchers.account_id = '670ff93326693293c631476f';

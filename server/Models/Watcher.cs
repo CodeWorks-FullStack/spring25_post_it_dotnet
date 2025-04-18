@@ -8,13 +8,13 @@ public class Watcher : RepoItem<int>
 }
 
 // NOTE DTO (data transfer object)
+// NOTE supports sending data from the watchers table and accounts table combined into one flattened out object
 public class WatcherProfile : Profile
 {
   public int WatcherId { get; set; }
   public int AlbumId { get; set; }
 }
 
-// NOTE DTO (data transfer object)
 public class WatcherAlbum : Album
 {
   public int WatcherId { get; set; }
