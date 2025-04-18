@@ -64,4 +64,11 @@ SELECT * FROM pictures WHERE id = 3 LIMIT 1;
 
 SELECT * FROM albums;
 
-INSERT INTO watchers(album_id, account_id) VALUES (16, '65f87bc1e02f1ee243874743');
+INSERT INTO watchers(album_id, account_id) VALUES (31, '67ffe04bbdbf63a799434840');
+
+SELECT
+watchers.*,
+accounts.*
+FROM watchers
+INNER JOIN accounts ON accounts.id = watchers.account_id
+WHERE watchers.album_id = 31;

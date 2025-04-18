@@ -104,4 +104,19 @@ public class AlbumsController : ControllerBase
     }
   }
 
+
+  [HttpGet("{albumId}/watchers")]
+  public ActionResult<List<WatcherProfile>> GetWatcherProfilesByAlbumId(int albumId)
+  {
+    try
+    {
+      List<WatcherProfile> watcherProfiles = _watchersService.GetWatcherProfilesByAlbumId(albumId);
+      return Ok(watcherProfiles);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
 }
