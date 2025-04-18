@@ -13,3 +13,10 @@ public class WatcherProfile : Profile
   public int WatcherId { get; set; }
   public int AlbumId { get; set; }
 }
+
+// NOTE DTO (data transfer object)
+public class WatcherAlbum : Album
+{
+  public int WatcherId { get; set; }
+  public string AccountId { get; set; }
+}

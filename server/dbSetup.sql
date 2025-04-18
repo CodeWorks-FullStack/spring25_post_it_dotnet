@@ -72,3 +72,13 @@ accounts.*
 FROM watchers
 INNER JOIN accounts ON accounts.id = watchers.account_id
 WHERE watchers.album_id = 31;
+
+
+SELECT 
+watchers.*,
+albums.*,
+accounts.*
+FROM watchers
+INNER JOIN albums ON albums.id = watchers.album_id
+INNER JOIN accounts ON accounts.id = albums.creator_id
+WHERE watchers.account_id = '670ff93326693293c631476f';

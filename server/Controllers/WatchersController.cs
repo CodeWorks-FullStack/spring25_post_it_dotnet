@@ -14,14 +14,30 @@ public class WatchersController : ControllerBase
 
   [Authorize]
   [HttpPost]
-  public async Task<ActionResult<Watcher>> CreateWatcher([FromBody] Watcher watcherData)
+  public async Task<ActionResult<WatcherProfile>> CreateWatcher([FromBody] Watcher watcherData)
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       watcherData.AccountId = userInfo.Id;
-      Watcher watcher = _watchersService.CreateWatcher(watcherData);
-      return Ok(watcher);
+      WatcherProfile watcherProfile = _watchersService.CreateWatcher(watcherData);
+      return Ok(watcherProfile);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
+  [Authorize]
+  [HttpDelete("{watcherId}")]
+  public async Task<ActionResult<string>> DeleteWatcher(int watcherId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      _watchersService.DeleteWatcher(watcherId, userInfo);
+      return Ok("Deleted watcher!");
     }
     catch (Exception exception)
     {
