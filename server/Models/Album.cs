@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace post_it_dotnet.Models;
 
-
 public class Album : RepoItem<int>
 {
   // public int Id { get; set; }

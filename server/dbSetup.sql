@@ -31,16 +31,37 @@ CREATE TABLE pictures(
   FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE
 );
 
+
+CREATE TABLE watchers(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  account_id VARCHAR(255) NOT NULL,
+  album_id INT NOT NULL,
+  FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE,
+  FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
+  -- NOTE you can only watch an album once
+  UNIQUE(account_id, album_id)
+);
+
 DROP TABLE albums;
+
+SELECT * FROM accounts;
 
 SELECT * FROM albums WHERE archived = true;
 
 SELECT
-    albums.*,
-    accounts.*
-    FROM albums
-    INNER JOIN accounts ON accounts.id = albums.creator_id
-    WHERE albums.id = 1;
+albums.*,
+accounts.*
+FROM albums
+INNER JOIN accounts ON accounts.id = albums.creator_id
+WHERE albums.id = 1;
 
 
-    SELECT * FROM pictures;
+SELECT * FROM pictures;
+
+SELECT * FROM pictures WHERE id = 3 LIMIT 1;
+
+SELECT * FROM albums;
+
+INSERT INTO watchers(album_id, account_id) VALUES (16, '65f87bc1e02f1ee243874743');
